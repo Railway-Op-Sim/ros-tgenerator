@@ -1,24 +1,28 @@
-package net.danielgill.ros.tgenerator;
+package net.danielgill.ros.tgenerator.rtt;
 
-import net.danielgill.ros.service.reference.Reference;
-import net.danielgill.ros.service.time.Time;
+import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class RTTParse {
-    private final JSONObject rtt;
-    private final JSONObject origin;
-    private final JSONObject destination;
-    private final JSONArray locations;
-    
-    public RTTParse(JSONObject rtt) {
-        this.rtt = rtt;
-        System.out.println(rtt);
-        this.origin = (JSONObject) ((JSONArray) rtt.get("origin")).get(0);
-        this.destination = (JSONObject) ((JSONArray) rtt.get("destination")).get(0);
-        this.locations = (JSONArray) rtt.get("locations");
+    public RTTParse() {
+        
     }
     
+    public RTTService parseRTT(JSONObject rtt) {
+        JSONArray locations = (JSONArray) rtt.get("locations");
+        ArrayList<RTTStop> stops = new ArrayList<>();
+        for(int i = 0; i < locations.size(); i++) {
+            JSONObject location = (JSONObject) locations.get(i);
+            String desc = (String) location.get("description");
+            String CRS = (String) location.get("crs");
+            String TIPLOC = (String) location.get("tiploc");
+            String platform = (String) location.get("platform");
+            RTTStop stop = new RTTStop();
+        }
+    }
+    
+    /*
     public Reference getTrainIdentity() {
         return new Reference((String) rtt.get("trainIdentity"));
     }
@@ -77,4 +81,5 @@ public class RTTParse {
     private String insertColon(String toInsert) {
         return toInsert.substring(0, 2) + ":" + toInsert.substring(2, 3);
     }
+    */
 }

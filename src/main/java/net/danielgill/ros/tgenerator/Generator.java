@@ -1,13 +1,15 @@
 package net.danielgill.ros.tgenerator;
 
+import net.danielgill.ros.tgenerator.rtt.RTTParse;
+import net.danielgill.ros.tgenerator.rtt.RTT;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import net.danielgill.ros.service.Service;
-import net.danielgill.ros.service.ServiceInvalidException;
+import net.danielgill.ros.service.time.Time;
+import net.danielgill.ros.tgenerator.rtt.RTTService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -31,22 +33,25 @@ public class Generator<T extends Parser> {
         this.day = day;
     }
     
-    public <T extends Parser> String createTimetable(T parse) throws FileNotFoundException, IOException, ParseException, InterruptedException {
-        String ttb = "";
+    public <T extends Parser> String createTimetable(T parse, Time startTime) throws FileNotFoundException, IOException, ParseException, InterruptedException {
         JSONParser parser = new JSONParser();
         JSONArray serviceIDs = (JSONArray) parser.parse(new FileReader(servicesList));
         RTT rtt = new RTT();
+        ArrayList<RTTService> services = new ArrayList<>();
+        Timetable ttb = new Timetable(startTime);
+        
+        for(int i = 0; i < serviceIDs.size(); i++) {
+            
+        }
         for(int i = 0; i < serviceIDs.size(); i++) {
             String id = (String) serviceIDs.get(i);
             JSONObject jo = rtt.getData(id, year, month, day, APIUser, APIPass);
             RTTParse rttp = new RTTParse(jo);
-            Service s = parse.genService(rttp);
-            try {
-                ttb += "\u0000" + s.toTimetableString();
-            } catch (ServiceInvalidException e) {
-                System.err.println("[" + e.getRef() + "]: " + e.getMessage());
+            Service s = parse.genService(rttp, ttb);
+            if(s != null) {
+                
             }
         }
-        return ttb;
+        return ttb.getTextTimetable();
     }
 }

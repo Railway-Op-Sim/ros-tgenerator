@@ -1,4 +1,4 @@
-package net.danielgill.ros.tgenerator;
+package net.danielgill.ros.tgenerator.rtt;
 
 import java.io.File;
 import java.io.FileNotFoundException;
