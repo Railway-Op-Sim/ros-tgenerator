@@ -1,6 +1,7 @@
 package net.danielgill.ros.tgenerator.rtt;
 
 import java.util.ArrayList;
+import net.danielgill.ros.service.time.Time;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -11,6 +12,7 @@ public class RTTParse {
     
     public RTTService parseRTT(JSONObject rtt) {
         JSONArray locations = (JSONArray) rtt.get("locations");
+        String ref = (String) rtt.get("trainIdentity");
         ArrayList<RTTStop> stops = new ArrayList<>();
         for(int i = 0; i < locations.size(); i++) {
             JSONObject location = (JSONObject) locations.get(i);
@@ -18,8 +20,23 @@ public class RTTParse {
             String CRS = (String) location.get("crs");
             String TIPLOC = (String) location.get("tiploc");
             String platform = (String) location.get("platform");
-            RTTStop stop = new RTTStop();
+            Time arr;
+            Time dep;
+            if(location.containsKey("gbttBookedArrival")) {
+                arr = new Time(insertColon(((String) location.get("gbttBookedArrival")).substring(0, 3)));
+            } else {
+                arr = null;
+            }
+            if(location.containsKey("gbttBookedDeparture")) {
+                dep = new Time(insertColon(((String) location.get("gbttBookedDeparture")).substring(0, 3)));
+            } else {
+                dep = null;
+            }
+            RTTStop stop = new RTTStop(desc, CRS, TIPLOC, platform, arr, dep);
+            stops.add(stop);
         }
+        RTTService rtts = new RTTService(ref, stops);
+        return rtts;
     }
     
     /*
@@ -77,9 +94,9 @@ public class RTTParse {
     public String getDescription() {
         return getOriginDescription() + " to " + getDestinationDescription();
     }
+    */
     
     private String insertColon(String toInsert) {
         return toInsert.substring(0, 2) + ":" + toInsert.substring(2, 3);
     }
-    */
 }

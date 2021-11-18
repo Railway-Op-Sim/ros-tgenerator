@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import net.danielgill.ros.service.Service;
 import net.danielgill.ros.service.time.Time;
 import net.danielgill.ros.tgenerator.rtt.RTTService;
+import net.danielgill.ros.tgenerator.rtt.RTTStop;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -41,15 +42,15 @@ public class Generator<T extends Parser> {
         Timetable ttb = new Timetable(startTime);
         
         for(int i = 0; i < serviceIDs.size(); i++) {
-            
-        }
-        for(int i = 0; i < serviceIDs.size(); i++) {
             String id = (String) serviceIDs.get(i);
             JSONObject jo = rtt.getData(id, year, month, day, APIUser, APIPass);
-            RTTParse rttp = new RTTParse(jo);
-            Service s = parse.genService(rttp, ttb);
+            RTTParse rttp = new RTTParse();
+            services.add(rttp.parseRTT(jo));
+        }
+        for(int i = 0; i < serviceIDs.size(); i++) {
+            Service s = parse.genService(services.get(i), ttb);
             if(s != null) {
-                
+                ttb.addService(s);
             }
         }
         return ttb.getTextTimetable();

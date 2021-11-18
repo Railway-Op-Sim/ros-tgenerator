@@ -17,4 +17,8 @@ public class RTTService {
         ref = new Reference(identity);
         this.stops = stops;
     }
+    
+    public Reference getReference() {
+        return ref;
+    }
 }

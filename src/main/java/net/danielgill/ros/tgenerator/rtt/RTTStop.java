@@ -9,6 +9,7 @@ public class RTTStop {
     
     private String platform;
     
+    //Can be null.
     private Time arrivalTime;
     private Time departureTime;
     
