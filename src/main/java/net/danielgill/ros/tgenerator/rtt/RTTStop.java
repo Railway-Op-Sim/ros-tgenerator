@@ -1,24 +1,40 @@
 package net.danielgill.ros.tgenerator.rtt;
 
+import net.danielgill.ros.service.event.StopEvent;
+import net.danielgill.ros.service.location.NamedLocation;
 import net.danielgill.ros.service.time.Time;
 
 public class RTTStop {
-    private String description;
-    private String CRS;
-    private String TIPLOC;
+    public String description;
+    public String CRS;
+    public String TIPLOC;
     
-    private String platform;
+    public String platform;
     
     //Can be null.
-    private Time arrivalTime;
-    private Time departureTime;
+    public Time arrTime;
+    public Time depTime;
     
     public RTTStop(String desc, String CRS, String TIPLOC, String platform, Time arrTime, Time depTime) {
         this.description = desc;
         this.CRS = CRS;
         this.TIPLOC = TIPLOC;
         this.platform = platform;
-        this.arrivalTime = arrTime;
-        this.departureTime = depTime;
+        this.arrTime = arrTime;
+        this.depTime = depTime;
+    }
+    
+    public int getPlatformInt() {
+        return Integer.parseInt(platform);
+    }
+    
+    public StopEvent toStopEvent() {
+        if(arrTime != null && depTime != null) {
+            return new StopEvent(arrTime, depTime, new NamedLocation(description));
+        } else if(arrTime != null && depTime == null) {
+            return new StopEvent(arrTime, new NamedLocation(description));
+        } else {
+            return new StopEvent(new NamedLocation(description), depTime);
+        }
     }
 }

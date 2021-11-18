@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import net.danielgill.ros.service.reference.Reference;
 
 public class RTTService {
-    private Reference ref;
+    public Reference ref;
     
     private ArrayList<RTTStop> stops;
     
@@ -20,5 +20,26 @@ public class RTTService {
     
     public Reference getReference() {
         return ref;
+    }
+    
+    public RTTStop getOrigin() {
+        return stops.get(0);
+    }
+    
+    public RTTStop getDestination() {
+        return stops.get(stops.size() - 1);
+    }
+    
+    public RTTStop getStopFromCRS(String crs) {
+        for(int i = 0; i < stops.size(); i++) {
+            if(stops.get(i).CRS.equalsIgnoreCase(crs)) {
+                return stops.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public String getDescription() {
+        return getOrigin().description + " to " + getDestination().description;
     }
 }
