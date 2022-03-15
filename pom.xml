@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.danielgill</groupId>
-    <artifactId>ros-tgenerator</artifactId>
+    <groupId>net.danielgill.ros</groupId>
+    <artifactId>tgenerator</artifactId>
     <version>1.0.0-alpha</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ros-service</artifactId>
-            <version>v1.2.1-alpha</version>
+            <groupId>net.danielgill.ros</groupId>
+            <artifactId>timetable-lib</artifactId>
+            <version>1.1.6</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>

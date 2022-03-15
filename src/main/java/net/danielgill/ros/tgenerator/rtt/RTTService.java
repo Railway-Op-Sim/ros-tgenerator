@@ -1,7 +1,8 @@
 package net.danielgill.ros.tgenerator.rtt;
 
 import java.util.ArrayList;
-import net.danielgill.ros.service.reference.Reference;
+
+import net.danielgill.ros.timetable.reference.Reference;
 
 public class RTTService {
     public Reference ref;

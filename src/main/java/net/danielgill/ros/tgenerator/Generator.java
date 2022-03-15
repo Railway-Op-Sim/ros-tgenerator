@@ -7,10 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import net.danielgill.ros.service.Service;
-import net.danielgill.ros.service.time.Time;
 import net.danielgill.ros.tgenerator.rtt.RTTService;
-import net.danielgill.ros.tgenerator.rtt.RTTStop;
+import net.danielgill.ros.timetable.Timetable;
+import net.danielgill.ros.timetable.service.Service;
+import net.danielgill.ros.timetable.service.ServiceInvalidException;
+import net.danielgill.ros.timetable.time.Time;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,7 +36,7 @@ public class Generator<T extends Parser> {
         this.day = day;
     }
     
-    public <T extends Parser> String createTimetable(T parse, Time startTime) throws FileNotFoundException, IOException, ParseException, InterruptedException {
+    public <T extends Parser> String createTimetable(T parse, Time startTime) throws FileNotFoundException, IOException, ParseException, InterruptedException, ServiceInvalidException {
         JSONParser parser = new JSONParser();
         JSONArray serviceIDs = (JSONArray) parser.parse(new FileReader(servicesList));
         RTT rtt = new RTT();

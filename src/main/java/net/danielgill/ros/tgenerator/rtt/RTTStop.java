@@ -1,8 +1,8 @@
 package net.danielgill.ros.tgenerator.rtt;
 
-import net.danielgill.ros.service.event.StopEvent;
-import net.danielgill.ros.service.location.NamedLocation;
-import net.danielgill.ros.service.time.Time;
+import net.danielgill.ros.timetable.event.StopEvent;
+import net.danielgill.ros.timetable.location.NamedLocation;
+import net.danielgill.ros.timetable.time.Time;
 
 public class RTTStop {
     public String description;

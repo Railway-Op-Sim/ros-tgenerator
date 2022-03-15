@@ -1,9 +1,10 @@
 package net.danielgill.ros.tgenerator.rtt;
 
 import java.util.ArrayList;
-import net.danielgill.ros.service.time.Time;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import net.danielgill.ros.timetable.time.Time;
 
 public class RTTParse {
     public RTTParse() {
